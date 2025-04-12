@@ -1,0 +1,283 @@
+# Sword & Poker Game Development Specification
+
+## 1. Core Gameplay Mechanics
+
+### 1.1 Combat System
+- **Grid System**: 5×5 card grid battlefield
+- **Turn-Based Combat**: Player and enemies alternate placing cards and forming hands
+- **Card Placement**: Cards must be placed adjacent to existing cards (horizontally, vertically, or diagonally)
+- **Hand Formation**: Poker hands are created using 5 cards in a row/pattern
+- **Valid Hands**: Pair, two pair, three of a kind, straight, flush, full house, four of a kind, straight flush, royal flush
+- **Initiative Rules**: Player typically goes first, but certain enemies or conditions may alter this
+
+### 1.2 Damage Calculation
+- **Hand Strength Mapping**:
+  - Pair: 10 damage
+  - Two Pair: 25 damage
+  - Three of a Kind: 40 damage
+  - Straight: 60 damage
+  - Flush: 80 damage
+  - Full House: 100 damage
+  - Four of a Kind: 120 damage
+  - Straight Flush: 150 damage
+  - Royal Flush: 200 damage
+- **Modifier System**: Weapons, skills, and enemy types can modify damage values
+
+### 1.3 Card Distribution
+- **Deck Composition**: Standard 52-card deck
+- **Card Appearance Probabilities**:
+  - Each card has equal probability (1/52) in basic scenarios
+  - Special cards have reduced probability (1/100)
+  - Initial board setup has balanced distribution of high/low cards
+
+### 1.4 Health System
+- **Player HP**: Starting at 100, increases with level progression
+- **Enemy HP**: Varies by enemy type and dungeon level
+- **HP Visualization**: Clear numerical and visual representation
+
+## 2. Progression Systems
+
+### 2.1 Dungeon Structure
+- **Floors**: 10 themed floors (Forest, Cave, Castle, etc.)
+- **Rooms per Floor**: 5-10 rooms with increasing difficulty
+- **Room Types**: Battle rooms, treasure rooms, shop rooms, rest areas
+- **Map Navigation**: Branching paths with player choice of route
+- **Completion Criteria**: Defeat boss to unlock next floor
+
+### 2.2 Enemy Variety
+- **Enemy Types**: 
+  - Basic Enemies: Follow simple strategies
+  - Elite Enemies: Have special abilities
+  - Mini-Bosses: Appear mid-floor with unique mechanics
+  - Bosses: End-floor challenges with complex abilities
+- **Enemy Traits**: Each enemy has specific strengths (e.g., stronger with flush hands)
+
+### 2.3 Character Progression
+- **Experience System**: Gain XP from battles
+- **Level-Up Benefits**: Increased HP, new abilities, equipment slots
+- **Skill Tree**: Unlock special abilities that modify gameplay
+- **Achievement System**: Unlock bonuses for completing challenges
+
+## 3. Equipment & Items
+
+### 3.1 Weapons (Swords)
+- **Sword Types**: 
+  - Common: Basic damage modifiers
+  - Uncommon: Special effects on certain hands
+  - Rare: Unique abilities and significant bonuses
+  - Legendary: Game-changing effects
+- **Weapon Effects Examples**:
+  - Fire Sword: +30% damage on red card hands
+  - Ice Blade: 10% chance to freeze enemy for one turn
+  - Thunder Edge: Bonus damage for straights
+
+### 3.2 Shields
+- **Shield Types**:
+  - Light: Small damage reduction, minimal penalties
+  - Medium: Moderate protection with balanced stats
+  - Heavy: Significant protection but reduces certain hand effectiveness
+- **Shield Effects**:
+  - Damage Reduction: 10-50% based on quality
+  - Special Abilities: Reflect damage, block status effects
+
+### 3.3 Consumables
+- **Potion Types**:
+  - Health: Restore HP (small, medium, large variants)
+  - Card Manipulation: Change card values or suits
+  - Special: Temporary buffs or unique effects
+- **Usage Timing**: Can be used before placing a card
+
+### 3.4 Special Cards
+- **Jokers**: Can represent any card
+- **Royal Cards**: Enhanced versions of face cards with bonus effects
+- **Element Cards**: Apply status effects when used in hands
+
+## 4. Economy & Resource Management
+
+### 4.1 Currency System
+- **Gold**: Primary currency earned from battles, chests
+- **Gems**: Premium currency for rare items (optional)
+- **Materials**: Collected for crafting equipment
+
+### 4.2 Shops
+- **Shop Locations**: Between dungeon floors and occasionally mid-floor
+- **Inventory Rotation**: Different items available based on progress
+- **Price Scaling**: Items become more expensive in later floors
+- **Shop Keeper Interactions**: Possible discounts through relationship building
+
+### 4.3 Crafting System
+- **Blueprint Discovery**: Find plans for new equipment
+- **Material Collection**: Gather components from battles and exploration
+- **Crafting Process**: Create new equipment at forge locations
+- **Upgrade System**: Enhance existing equipment with materials
+
+## 5. AI Implementation Requirements
+
+### 5.1 Game State Representation
+- **Board State**: 5×5 grid with card values and suits
+- **Player State**: HP, equipment, inventory, abilities
+- **Enemy State**: HP, abilities, card preferences
+- **Turn Counter**: Track battle progression
+- **Available Actions**: Legal card placements and skill uses
+
+### 5.2 AI Decision Making
+- **Action Space**:
+  - Card placement (which card and where)
+  - Ability usage
+  - Item usage
+- **Evaluation Function**: 
+  - Maximize hand strength
+  - Minimize player's potential hand strength
+  - Consider future turn implications
+- **Difficulty Scaling Parameters**:
+  - Look-ahead depth (1-3 moves for easy, 4+ for hard)
+  - Heuristic precision (percentage of optimal play)
+  - Risk tolerance adjustment
+
+### 5.3 Enemy Behavior Patterns
+- **Aggression Levels**: Different enemies prioritize offense vs. defense
+- **Card Preferences**: Some enemies favor certain suits or values
+- **Special Abilities**: Unique mechanics that modify standard rules
+- **Boss Phases**: Changes in behavior at different HP thresholds
+
+### 5.4 Reinforcement Learning Parameters
+- **Reward Functions**:
+  - Positive: Damage dealt, battles won, floors completed
+  - Negative: Damage taken, turns without forming hands
+- **State Value Estimation**: Evaluate board positions for training
+- **Learning Rate**: Adaptation speed for AI improvement
+- **Exploration vs. Exploitation**: Balance between trying new strategies and using proven ones
+
+## 6. User Experience Design
+
+### 6.1 Tutorial System
+- **Progressive Introduction**: Teach mechanics one at a time
+- **Interactive Tutorials**: Guided first battles
+- **Tip System**: Context-sensitive hints during gameplay
+- **Reference Guide**: Accessible comprehensive rules
+
+### 6.2 UI Requirements
+- **Main Screen Elements**:
+  - Card grid (central focus)
+  - Player/Enemy HP bars
+  - Hand inventory
+  - Equipment display
+  - Action buttons
+- **Information Display**:
+  - Clear hand evaluation
+  - Damage preview
+  - Turn indicator
+  - Special effect notifications
+
+### 6.3 Feedback Systems
+- **Visual Feedback**:
+  - Card highlight for potential hands
+  - Attack animations scaled by damage
+  - Critical hit effects
+  - Status effect indicators
+- **Audio Feedback**:
+  - Card placement sounds
+  - Attack impact sounds
+  - Victory/defeat jingles
+  - Ambient dungeon sounds
+
+### 6.4 Accessibility Features
+- **Text Size Options**: Adjustable UI text
+- **Color Blind Mode**: Alternative color schemes
+- **Audio Cues**: Non-visual indicators for important events
+- **Difficulty Modes**: Adjustable challenge levels
+
+## 7. Visual & Audio Design
+
+### 7.1 Art Direction
+- **Style Guide**: Fantasy-themed with card-based visual elements
+- **Character Design**: Distinctive player avatar and enemy designs
+- **Environment Themes**: Unique visual identity for each dungeon floor
+- **Card Design**: Standard card faces with fantasy-themed backs
+- **Animation Keyframes**: 
+  - Card placement: Smooth sliding motion
+  - Attack: Swift directional movement with impact
+  - Damage: Character recoil and flash effects
+  - Special moves: Unique visual signatures
+
+### 7.2 Audio Design
+- **Background Music**:
+  - Menu theme: Adventurous, inviting melody
+  - Battle themes: Varied by dungeon type, increasing tempo
+  - Boss battles: Intense, distinctive themes
+  - Victory fanfare: Triumphant short melody
+- **Sound Effects**:
+  - Card effects: Shuffling, dealing, playing sounds
+  - Combat sounds: Varied by weapon type and damage amount
+  - Environmental audio: Dungeon ambience specific to themes
+  - UI sounds: Gentle feedback for menu navigation
+
+## 8. Technical Implementation Notes
+
+### 8.1 Game Engine Requirements
+- **State Management**: Efficient handling of complex game state
+- **Card Physics**: Natural-feeling card movement
+- **AI Processing**: Fast enough for smooth enemy turns
+- **Save System**: Automatic and manual save options
+
+### 8.2 Balance Parameters
+- **Difficulty Curve**: 
+  - HP scaling: +10% per floor for enemies
+  - Damage scaling: +5% per floor for enemies
+  - Player progression: Expected power increase of 15% per floor
+- **Economy Balance**:
+  - Average gold per battle: 20-50 based on difficulty
+  - Item costs: Balanced to afford new equipment every 2-3 floors
+  - Consumable efficiency: Health potions restore 30-50% of max HP
+
+### 8.3 Playtime Targets
+- **Battle Duration**: 2-5 minutes for standard encounters
+- **Floor Completion**: 20-30 minutes per floor
+- **Full Game**: 5-8 hours for main progression
+- **Replayability**: Randomized elements ensure varied playthroughs
+
+## 9. Implementation Phases
+
+### 9.1 Prototype Phase
+- Implement basic card placement and hand evaluation
+- Create simple AI opponent with basic strategy
+- Establish core damage calculation system
+- Develop minimalist UI for testing
+
+### 9.2 Alpha Development
+- Add equipment and item systems
+- Implement multiple enemy types
+- Create first three dungeon floors
+- Develop basic progression system
+
+### 9.3 Beta Development
+- Complete all dungeon floors
+- Implement full enemy variety
+- Add all planned equipment and items
+- Develop tutorial system
+
+### 9.4 Polish & Balance
+- Fine-tune difficulty curve
+- Balance economy and rewards
+- Optimize AI performance
+- Refine visual and audio elements
+
+## 10. Testing Requirements
+
+### 10.1 AI Testing
+- **Strategy Evaluation**: Ensure AI makes reasonable moves
+- **Difficulty Testing**: Verify appropriate challenge by floor
+- **Edge Case Handling**: Test unusual board states
+- **Performance Testing**: Ensure AI decisions don't cause delays
+
+### 10.2 Gameplay Testing
+- **Balance Assessment**: Ensure fair but challenging progression
+- **Fun Factor**: Evaluate player engagement and satisfaction
+- **Learning Curve**: Test new player understanding
+- **Session Length**: Evaluate if gameplay segments fit target durations
+
+### 10.3 Technical Testing
+- **Performance Optimization**: Ensure smooth gameplay on target platforms
+- **Save/Load Integrity**: Verify game state is preserved correctly
+- **Stability Testing**: Ensure no crashes during extended play
+- **Memory Management**: Check for leaks or excessive usage
